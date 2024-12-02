@@ -42,20 +42,17 @@ class Day2: Day {
     }
 
     private fun levelCheck2(levels: List<Int>): Pair<Boolean, Boolean> {
-        var badLevel = -1
-        val directions = levels.mapIndexed { i, it ->
-            if (i != 0) {
-                Pair(it > levels[i - 1], i)
-            } else null
-        }.groupingBy { it?.first }.eachCount()
-        if (directions[true] == 1) {
-//            badLevel =
+        val check = levelCheck(levels)
+        if (check.first && check.second) {
+            return Pair(true, true)
         }
-        if (badLevel != -1) {
-            val newLevels = levels.toMutableList().apply { removeAt(badLevel) }
-            return levelCheck(newLevels)
+        levels.forEachIndexed { i, _ ->
+            val newLevels = levels.toMutableList().apply { removeAt(i) }
+            val newCheck = levelCheck(newLevels)
+            if (newCheck.first && newCheck.second) {
+                return Pair(true, true)
+            }
         }
-//        return Pair(cond1, true)
-        return Pair(true, true)
+        return Pair(check.first, check.second)
     }
 }
