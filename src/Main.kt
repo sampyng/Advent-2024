@@ -1,5 +1,6 @@
 fun main() {
-    val day1 = Day1()
-    println(day1.getAnswer1())
-    println(day1.getAnswer2())
+//    val day = Day()
+    val day = Day2()
+    println(day.getAnswer1())
+    println(day.getAnswer2())
 }
