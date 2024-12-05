@@ -1,56 +1,69 @@
 import java.io.File
 
-class Day4: Day {
-    private val input: String = File("src/res/input 4.txt").readText()
-    private val wordSearch = "XMAS"
-    private val directions = listOf(-1 to -1, -1 to 0, -1 to 1, 1 to -1, 1 to 0, 1 to 1, 0 to -1, 0 to 1)
+class Day5: Day {
+    private val input: String = File("src/res/input 5.txt").readText()
+    private val sections = input.split("\n\n")
+    private val rules = sections[0].split("\n")
+    private val updates = sections[1].split("\n")
+    private val ruleMap = mutableMapOf<String, MutableList<String>>()
+
+    init {
+        rules.forEach { rule ->
+            val inputs = rule.split("|")
+            if (ruleMap[inputs[0]] == null) {
+                ruleMap[inputs[0]] = mutableListOf(inputs[1])
+            } else {
+                ruleMap[inputs[0]]!!.add(inputs[1])
+            }
+        }
+    }
 
     override fun getAnswer1(): Any {
-        var total = 0
-        val lines = input.split("\n")
-        for ((i, line) in lines.withIndex()) {
-            for (j in line.indices) {
-                if (lines[i][j] == 'X') {
-                    total += directions.sumOf {
-                        searchWord(lines, i, j, it, 1)
+        return updates.sumOf { update ->
+            var isRightOrder = true
+            val pages = update.split(",")
+            pages.forEach{
+                ruleMap[it]?.forEach { nextPage ->
+                    if (update.contains(nextPage) && update.indexOf(nextPage) < update.indexOf(it)) {
+                        isRightOrder = false
                     }
                 }
             }
+            if (isRightOrder)
+                pages[(pages.size - 1)/2].toInt()
+            else
+                0
         }
-        return total
     }
 
     override fun getAnswer2(): Any {
-        var total = 0
-        val lines = input.split("\n")
-        for ((i, line) in lines.withIndex()) {
-            for (j in line.indices) {
-                if (lines[i][j] == 'A') {
-                    try {
-                        total += when ("${lines[i - 1][j - 1]}${lines[i - 1][j + 1]}${lines[i + 1][j + 1]}${lines[i + 1][j - 1]}") {
-                            "MMSS", "SMMS", "SSMM", "MSSM" -> 1
-                            else -> 0
-                        }
-                    } catch (_: IndexOutOfBoundsException) {}
-                }
+        val answer1 = getAnswer1()
+        val total = updates.sumOf { update ->
+            val pages = update.split(",")
+            var isReady = false
+            var pagesToReorder = pages
+            while (!isReady) {
+                val result = applyRules(pagesToReorder)
+                pagesToReorder = result.first
+                isReady = result.second
             }
+            pagesToReorder[(pagesToReorder.size - 1)/2].toInt()
         }
-        return total
+        return total - answer1 as Int
     }
 
-    private fun searchWord(lines: List<String>, i: Int, j: Int, direction: Pair<Int, Int>, wordIndex: Int): Int {
-        try {
-            return if (lines[i + direction.first][j + direction.second] == wordSearch[wordIndex]) {
-                if (wordIndex == wordSearch.length - 1) {
-                    return 1
-                } else {
-                    searchWord(lines, i + direction.first, j + direction.second, direction, wordIndex + 1)
+    private fun applyRules(pages: List<String>): Pair<List<String>, Boolean> {
+        pages.forEach {
+            ruleMap[it]?.forEach { nextPage ->
+                if (pages.contains(nextPage) && pages.indexOf(nextPage) < pages.indexOf(it)) {
+                    val newPages = pages.toMutableList().apply {
+                        removeAt(pages.indexOf(it))
+                        add(pages.indexOf(nextPage), it)
+                    }
+                    return newPages to false
                 }
-            } else {
-                0
             }
-        } catch (_: IndexOutOfBoundsException) {
-            return 0
         }
+        return pages to true
     }
 }
