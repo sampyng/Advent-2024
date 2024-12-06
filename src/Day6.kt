@@ -23,7 +23,6 @@ class Day6 : Day {
                 map[guard.second] = map[guard.second].replaceCharAtIndex(guard.first ,'X')
                 checkObstacle()
                 checkObstacle()
-                checkObstacle()
                 guard = nextStep(guard)
             }
         } catch (_: IndexOutOfBoundsException) {}
@@ -42,7 +41,6 @@ class Day6 : Day {
                     var step = setup(index1, index2)
                     try {
                         while(step <= maxSteps) {
-                            checkObstacle()
                             checkObstacle()
                             checkObstacle()
                             guard = nextStep(guard)
