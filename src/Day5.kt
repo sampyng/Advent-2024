@@ -1,6 +1,6 @@
 import java.io.File
 
-class Day5: Day {
+class Day5 : Day {
     private val input: String = File("src/res/input 5.txt").readText()
     private val sections = input.split("\n\n")
     private val rules = sections[0].split("\n")
@@ -22,17 +22,15 @@ class Day5: Day {
         return updates.sumOf { update ->
             var isRightOrder = true
             val pages = update.split(",")
-            pages.forEach{
+            pages.forEach {
                 ruleMap[it]?.forEach { nextPage ->
                     if (update.contains(nextPage) && update.indexOf(nextPage) < update.indexOf(it)) {
                         isRightOrder = false
                     }
                 }
             }
-            if (isRightOrder)
-                pages[(pages.size - 1)/2].toInt()
-            else
-                0
+            if (isRightOrder) pages[(pages.size - 1) / 2].toInt()
+            else 0
         }
     }
 
@@ -47,7 +45,7 @@ class Day5: Day {
                 pagesToReorder = result.first
                 isReady = result.second
             }
-            pagesToReorder[(pagesToReorder.size - 1)/2].toInt()
+            pagesToReorder[(pagesToReorder.size - 1) / 2].toInt()
         }
         return total - answer1 as Int
     }

@@ -1,6 +1,6 @@
 import java.io.File
 
-class Day3: Day {
+class Day3 : Day {
     private val input: String = File("src/res/input 3.txt").readText()
     private val regexNumbers = Regex("\\d+")
 

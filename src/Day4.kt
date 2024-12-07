@@ -1,6 +1,6 @@
 import java.io.File
 
-class Day4: Day {
+class Day4 : Day {
     private val input: String = File("src/res/input 4.txt").readText()
     private val wordSearch = "XMAS"
     private val directions = listOf(-1 to -1, -1 to 0, -1 to 1, 1 to -1, 1 to 0, 1 to 1, 0 to -1, 0 to 1)
@@ -31,7 +31,8 @@ class Day4: Day {
                             "MMSS", "SMMS", "SSMM", "MSSM" -> 1
                             else -> 0
                         }
-                    } catch (_: IndexOutOfBoundsException) {}
+                    } catch (_: IndexOutOfBoundsException) {
+                    }
                 }
             }
         }

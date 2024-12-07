@@ -1,7 +1,7 @@
 import java.io.File
 import kotlin.math.abs
 
-class Day1: Day{
+class Day1 : Day {
     private val list1 = mutableListOf<Int>()
     private val list2 = mutableListOf<Int>()
 
@@ -20,7 +20,7 @@ class Day1: Day{
         var distance = 0
 
         list1.forEachIndexed { i, s ->
-            distance += abs(s-list2[i])
+            distance += abs(s - list2[i])
         }
         return distance
     }

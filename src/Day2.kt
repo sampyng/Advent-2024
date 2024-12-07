@@ -1,7 +1,7 @@
 import java.io.File
 import kotlin.math.abs
 
-class Day2: Day {
+class Day2 : Day {
     private val reports: List<List<Int>>
 
     init {
@@ -10,6 +10,7 @@ class Day2: Day {
             line.split(" ").map { it.toInt() }
         }
     }
+
     override fun getAnswer1(): Any {
         var safeReports = 0
         reports.forEach { levels ->
@@ -28,9 +29,10 @@ class Day2: Day {
         return safeReports
     }
 
-    private fun levelCheck(levels: List<Int>, ): Pair<Boolean, Boolean> {
+    private fun levelCheck(levels: List<Int>): Pair<Boolean, Boolean> {
         val levelString = levels.joinToString(" ")
-        var cond1 = levelString == levels.sorted().joinToString(" ") || levelString == levels.sortedDescending().joinToString(" ")
+        var cond1 = levelString == levels.sorted().joinToString(" ") || levelString == levels.sortedDescending()
+            .joinToString(" ")
         var cond2 = true
         levels.forEachIndexed { i, it ->
             if (i != 0) {

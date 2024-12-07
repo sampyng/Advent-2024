@@ -1,4 +1,5 @@
 import java.io.File
+
 class Day6 : Day {
     private lateinit var input: String
     private lateinit var map: MutableList<String>
@@ -19,13 +20,14 @@ class Day6 : Day {
     override fun getAnswer1(): Any {
         init()
         try {
-            while(true) {
-                map[guard.second] = map[guard.second].replaceCharAtIndex(guard.first ,'X')
+            while (true) {
+                map[guard.second] = map[guard.second].replaceCharAtIndex(guard.first, 'X')
                 checkObstacle()
                 checkObstacle()
                 guard = nextStep(guard)
             }
-        } catch (_: IndexOutOfBoundsException) {}
+        } catch (_: IndexOutOfBoundsException) {
+        }
 
         return map.sumOf { line -> line.count { it == 'X' } }
     }
@@ -37,16 +39,17 @@ class Day6 : Day {
         init()
         map.forEachIndexed { index1, line ->
             line.forEachIndexed { index2, char ->
-                if (char != '#' && char != '^' ) {
+                if (char != '#' && char != '^') {
                     var step = setup(index1, index2)
                     try {
-                        while(step <= maxSteps) {
+                        while (step <= maxSteps) {
                             checkObstacle()
                             checkObstacle()
                             guard = nextStep(guard)
                             step++
                         }
-                    } catch (_: IndexOutOfBoundsException) { }
+                    } catch (_: IndexOutOfBoundsException) {
+                    }
 
                     if (step >= maxSteps) {
                         total++
