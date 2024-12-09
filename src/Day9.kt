@@ -12,9 +12,7 @@ class Day9 : Day {
 
     override fun getAnswer2(): Any {
         val blocks = input.toBlocks()
-        println(blocks.joinToString(separator = " "))
         val sortedBlocks = blocks.sort2()
-        println(sortedBlocks.joinToString(separator = " "))
         return sortedBlocks.checksum()
     }
 
@@ -58,20 +56,22 @@ class Day9 : Day {
                 var dotCount = 0
                 val temp = i / 2 // id
                 val indexOfFirstId = this.indexOfFirst { it == temp.toString() }
-                for (j in this.indexOfFirst { it == "." }..<indexOfFirstId) {
-                    if (this[j] == ".") {
-                        dotCount++
-                    } else {
-                        if (dotCount >= value) {
-                            for (k in indexOfFirstId..<indexOfFirstId+ value) {
-                                this[k] = "."
+                if (this.contains(".")) {
+                    for (j in this.indexOfFirst { it == "." } .. indexOfFirstId) {
+                        if (this[j] == ".") {
+                            dotCount++
+                        } else {
+                            if (dotCount >= value) {
+                                for (k in indexOfFirstId..<indexOfFirstId + value) {
+                                    this[k] = "."
+                                }
+                                for (k in j - dotCount..<j - dotCount + value) {
+                                    this[k] = temp.toString()
+                                }
+                                break
                             }
-                            for (k in j - dotCount..<j - dotCount + value) {
-                                this[k] = temp.toString()
-                            }
-                            break
+                            dotCount = 0
                         }
-                        dotCount = 0
                     }
                 }
             }
@@ -81,7 +81,7 @@ class Day9 : Day {
 
     private fun List<String>.checksum(): BigInteger {
         var index = BigInteger.ZERO
-        return this.sumOf { value ->
+        val total = this.sumOf { value ->
             try {
                 value.toBigInteger() * index
             } catch (_: NumberFormatException) {
@@ -90,6 +90,7 @@ class Day9 : Day {
                 index++
             }
         }
+        return total
     }
 }
 
