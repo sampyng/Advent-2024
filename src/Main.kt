@@ -10,7 +10,8 @@ fun main() {
 //    val day = Day9()
 //    val day = Day10()
 //    val day = Day11()
-    val day = Day12()
-    println(day.getAnswer1())
+//    val day = Day12()
+    val day = Day13()
+//    println(day.getAnswer1())
     println(day.getAnswer2())
 }
