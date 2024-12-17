@@ -14,7 +14,8 @@ fun main() {
 //    val day = Day13()
 //    val day = Day14()
 //    val day = `Day15-1`()
-    val day = `Day15-2`()
+//    val day = `Day15-2`()
+    val day = Day16()
     println(day.getAnswer1())
     println(day.getAnswer2())
 }
